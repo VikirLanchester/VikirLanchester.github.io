@@ -9,6 +9,12 @@
 <!-- ========================================== -->
 <title>Vikir Lanchester — Roblox Builder</title>
 
+<!-- ========================================== -->
+<!-- 🎨 DÜZENLENEBİLİR ALAN: Sekme Simgesi (Favicon) -->
+<!-- Simgendeki görselin adı neyse "favicon.png" yerine onu yazabilirsin -->
+<!-- ========================================== -->
+<link rel="icon" type="image/png" href="favicon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -273,6 +279,17 @@
     font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--lavender);
     z-index: 2;
   }
+  
+  /* Görsel yüklendiğinde, yedek yazının üstünü tamamen örtsün */
+  .work-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 3; 
+  }
+
   .work-body{padding:22px 24px;}
   .work-body .k{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--orchid); letter-spacing:0.05em;}
   .work-body h3{font-family:'Unbounded',sans-serif; font-size:16px; color:#fff; margin:10px 0 8px; font-weight:600;}
@@ -330,6 +347,7 @@
     object-fit: cover;
     position: absolute;
     inset: 0;
+    z-index: 3; /* Yedek yazıyı kapatması için */
     transition: transform 0.3s ease;
   }
   .gallery-item:hover img {
@@ -460,7 +478,6 @@
 
 <!-- GİRİŞ EKRANI (AÇILIŞ ANIMASYONU) -->
 <div id="intro-screen">
-  <!-- 📝 DÜZENLENEBİLİR ALAN: Girişte parlayacak ismi değiştirebilirsin -->
   <div class="intro-text">VIKIR LANCHESTER</div>
 </div>
 
@@ -469,7 +486,6 @@
 <!-- HEADER / NAV -->
 <header>
   <nav class="wrap">
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Sol Üst Logo / İsim -->
     <div class="brand"><span class="mark"></span> VIKIR LANCHESTER</div>
     
     <div class="navlinks" id="navlinks">
@@ -487,14 +503,8 @@
 <!-- GİRİŞ (HERO SECTION) -->
 <section class="hero" id="home">
   <div class="wrap hero-inner">
-    
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Çalışma Durumu Balonu -->
     <div class="status-pill"><span class="dot"></span> <span>Available for Commissions</span></div>
-    
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Ana Karşılama Başlığı (İngilizce) -->
     <h1>Building worlds,<br><span class="accent">block by block.</span></h1>
-    
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Giriş Alt Açıklaması -->
     <p class="hero-sub">I am Vikir Lanchester — a Roblox builder specializing in map creation, architecture, and environmental design. I manage the entire creative process from concept to optimized final build.</p>
     
     <div class="hero-actions">
@@ -502,14 +512,13 @@
       <a href="#contact" class="btn-outline">Get a Quote</a>
     </div>
     
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Sayaç ve İstatistikler -->
     <div class="hero-stats">
       <div>
-        <div class="stat-num">50+</div>
+        <div class="stat-num">40+</div>
         <div class="stat-label mono">COMPLETED BUILDS</div>
       </div>
       <div>
-        <div class="stat-num">3+</div>
+        <div class="stat-num">2+</div>
         <div class="stat-label mono">YEARS OF EXPERIENCE</div>
       </div>
       <div>
@@ -525,8 +534,6 @@
   <div class="wrap">
     <span class="tag mono">X:001 — ABOUT ME</span>
     <div class="about-grid">
-      
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Hakkımda Detaylı Yazı Alanı -->
       <div>
         <h2 style="margin-bottom:24px;">Storytelling through environment.</h2>
         <p>I am <strong>Vikir Lanchester</strong>, a builder designing immersive environments and structures for the Roblox universe. Every project should carry its own story — that's why I seek to understand the game's atmosphere, gameplay flow, and player experience before starting to design.</p>
@@ -534,14 +541,12 @@
         <p>Currently open to new projects and collaborations — let's talk if you have an idea.</p>
       </div>
       
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Sağ Taraf Bilgi Kartı -->
       <div class="coord-card">
         <div class="coord-row"><span class="k mono">ROLE</span><span class="v">Builder</span></div>
         <div class="coord-row"><span class="k mono">PRIMARY TOOL</span><span class="v">Roblox Studio</span></div>
         <div class="coord-row"><span class="k mono">PAYMENTS</span><span class="v">Robux · USD</span></div>
         <div class="coord-row"><span class="k mono">COMMISSIONS</span><span class="v">Open</span></div>
       </div>
-      
     </div>
   </div>
 </section>
@@ -559,35 +564,26 @@
   </div>
   <div class="wrap" style="padding:0;">
     <div class="services-grid">
-      
-      <!-- Hizmet 1 -->
       <div class="service-card">
         <span class="service-tag mono">TERRAIN</span>
         <h3>Terrain &amp; Environment</h3>
         <p>Natural or stylized terrain, seamless biome transitions, and detailed environmental atmosphere.</p>
       </div>
-      
-      <!-- Hizmet 2 -->
       <div class="service-card">
         <span class="service-tag mono">ARCHITECTURE</span>
         <h3>Architecture &amp; Interior</h3>
         <p>Custom buildings, interior assets, and level designs structured to support gameplay flow.</p>
       </div>
-      
-      <!-- Hizmet 3 -->
       <div class="service-card">
         <span class="service-tag mono">OPTIMIZATION</span>
         <h3>Performance Tuning</h3>
         <p>Optimized part counts, smart LOD setups, and streaming-enabled mobile-friendly builds.</p>
       </div>
-      
-      <!-- Hizmet 4 -->
       <div class="service-card">
         <span class="service-tag mono">REVISION</span>
         <h3>Revision Support</h3>
         <p>Post-delivery adjustments and fine-tuning to ensure seamless integration into your studio.</p>
       </div>
-      
     </div>
   </div>
 </section>
@@ -607,14 +603,11 @@
     <div class="works-scroll" id="worksScroll">
       
       <!-- =================================================== -->
-      <!-- 📝 PROJE 1: Güvenli Hisler (DÜZENLENEBİLİR ALAN)    -->
+      <!-- PROJE 1: Safe Feelings (Yazıları tamamen kaldırılan) -->
       <!-- =================================================== -->
       <div class="work-card">
         <div class="work-thumb">
-          <!-- 🖼️ Ana Görsel (Eğer görsel linkin varsa src="..." kısmına yaz) -->
-          <img src="Build1.webp" alt="Safe Feelings" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;">
-          <!-- 💡 Görsel yüklenmezse arkada gözükecek yedek metin -->
-          <span class="mono">Build1.webp</span>
+          <img src="Build1.webp" alt="Safe Feelings">
         </div>
         <div class="work-body">
           <span class="k mono">SIM STYLE MAP</span>
@@ -622,31 +615,25 @@
           <p>A cozy and serene space designed to evoke a sense of peace and comfort.</p>
         </div>
         
-        <!-- Üzerine gelince açılan ek görseller -->
         <div class="work-gallery">
           <span class="gallery-label mono">ADDITIONAL VIEWS</span>
           <div class="gallery-grid">
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 1 -->
               <img src="Build2.webp" alt="Perspective 1">
-              <span>Build2.webp</span>
             </div>
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 2 -->
               <img src="Build3.webp" alt="Perspective 2">
-              <span>Build3.webp</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- =================================================== -->
-      <!-- 📝 PROJE 2: Kayıp Kütüphane (DÜZENLENEBİLİR ALAN)  -->
+      <!-- PROJE 2: Kayıp Kütüphane                           -->
       <!-- =================================================== -->
       <div class="work-card">
         <div class="work-thumb">
-          <!-- 🖼️ Ana Görsel (Görsel linkini buraya koyabilirsin) -->
-          <!-- <img src="resim_linki.jpg" alt="The Lost Library" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <!-- <img src="resim_linki.jpg" alt="The Lost Library"> -->
           <span class="mono">BUILD_02.rbxl</span>
         </div>
         <div class="work-body">
@@ -659,12 +646,10 @@
           <span class="gallery-label mono">ADDITIONAL VIEWS</span>
           <div class="gallery-grid">
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 1 -->
               <!-- <img src="ek_resim_1.jpg" alt="Library Angle 1"> -->
               <span>IMG_02.rbxl</span>
             </div>
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 2 -->
               <!-- <img src="ek_resim_2.jpg" alt="Library Angle 2"> -->
               <span>IMG_03.rbxl</span>
             </div>
@@ -673,12 +658,11 @@
       </div>
 
       <!-- =================================================== -->
-      <!-- 📝 PROJE 3: Neon Şehir Merkezi (DÜZENLENEBİLİR ALAN)-->
+      <!-- PROJE 3: Neon Şehir Merkezi                        -->
       <!-- =================================================== -->
       <div class="work-card">
         <div class="work-thumb">
-          <!-- 🖼️ Ana Görsel -->
-          <!-- <img src="resim_linki.jpg" alt="Neon Downtown" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <!-- <img src="resim_linki.jpg" alt="Neon Downtown"> -->
           <span class="mono">BUILD_03.rbxl</span>
         </div>
         <div class="work-body">
@@ -691,12 +675,10 @@
           <span class="gallery-label mono">ADDITIONAL VIEWS</span>
           <div class="gallery-grid">
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 1 -->
               <!-- <img src="ek_resim_1.jpg" alt="City Angle 1"> -->
               <span>IMG_02.rbxl</span>
             </div>
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 2 -->
               <!-- <img src="ek_resim_2.jpg" alt="City Angle 2"> -->
               <span>IMG_03.rbxl</span>
             </div>
@@ -705,12 +687,11 @@
       </div>
 
       <!-- =================================================== -->
-      <!-- 📝 PROJE 4: Sessiz Koridor (DÜZENLENEBİLİR ALAN)   -->
+      <!-- PROJE 4: Sessiz Koridor                            -->
       <!-- =================================================== -->
       <div class="work-card">
         <div class="work-thumb">
-          <!-- 🖼️ Ana Görsel -->
-          <!-- <img src="resim_linki.jpg" alt="Silent Corridor" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <!-- <img src="resim_linki.jpg" alt="Silent Corridor"> -->
           <span class="mono">BUILD_04.rbxl</span>
         </div>
         <div class="work-body">
@@ -723,12 +704,10 @@
           <span class="gallery-label mono">ADDITIONAL VIEWS</span>
           <div class="gallery-grid">
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 1 -->
               <!-- <img src="ek_resim_1.jpg" alt="Corridor Angle 1"> -->
               <span>IMG_02.rbxl</span>
             </div>
             <div class="gallery-item">
-              <!-- 🖼️ Ek Görsel 2 -->
               <!-- <img src="ek_resim_2.jpg" alt="Corridor Angle 2"> -->
               <span>IMG_03.rbxl</span>
             </div>
@@ -752,8 +731,6 @@
       <p class="lead">I accept payments in Robux or USD depending on the project's scope. Milestone-based contracts are prioritized.</p>
     </div>
     <div class="rates-grid">
-      
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 1 (Parça başı) -->
       <div class="rate-card">
         <span class="rate-name mono">PER ASSET</span>
         <div class="rate-price">800 R$ <small>/ $3 USD</small></div>
@@ -764,7 +741,6 @@
         </ul>
       </div>
       
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 2 (Görev Başı) -->
       <div class="rate-card featured">
         <span class="rate-name mono">PER TASK</span>
         <div class="rate-price">4,000 R$ <small>/ $15 USD</small></div>
@@ -776,18 +752,16 @@
         </ul>
       </div>
       
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 3 (Tam Harita) -->
       <div class="rate-card">
         <span class="rate-name mono">FULL MAP</span>
         <div class="rate-price">Custom Quote</div>
         <p class="rate-desc">End-to-end map design, custom layout structure, and asset integration.</p>
         <ul class="rate-list">
           <li>Conceptual layout &amp; planning</li>
-          <li>Milestone-by-milestone delivery</li>
+          <li>Milestone-by-miletone delivery</li>
           <li>Unlimited revisions (within scope)</li>
         </ul>
       </div>
-      
     </div>
   </div>
 </section>
@@ -799,44 +773,37 @@
   <div class="wrap">
     <div class="contact-box">
       <span class="tag mono" style="justify-content:center;">X:005 — CONTACT</span>
-      
-      <!-- 📝 DÜZENLENEBİLİR ALAN: İletişim Başlıkları -->
       <h2>Let's build together.</h2>
       <p class="lead" style="margin:0 auto; max-width:480px;">Have a grand vision in mind? Message me to discuss the details.</p>
       
-      <!-- 📝 DÜZENLENEBİLİR ALAN: Twitter ve Discord Linkleri -->
       <div class="contact-links">
         <a href="https://twitter.com/KULLANICI_ADIN" target="_blank">Twitter / X</a>
         <a href="https://discord.com/invite/DAVET_KODUN" target="_blank">Discord</a>
       </div>
-      
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap" style="width:100%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-    <!-- 📝 DÜZENLENEBİLİR ALAN: Footer Telif Hakkı Yazısı -->
     <span>© 2026 Vikir Lanchester</span>
     <span class="mono">ROBLOX BUILDER · STUDIO READY</span>
   </div>
 </footer>
 
 <script type="text/javascript">
-  // Mobil Hamburger Menü Tetikleyicisi
   const toggle = document.getElementById('menuToggle');
   const navlinks = document.getElementById('navlinks');
   toggle.addEventListener('click', () => navlinks.classList.toggle('open'));
   function closeMenu(){ navlinks.classList.remove('open'); }
 
-  // Giriş Ekranını Kapatma Sistemi (Fade-out)
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       const intro = document.getElementById('intro-screen');
       if (intro) {
         intro.classList.add('fade-out');
       }
-    }, 2200); // Intro ekranda 2.2 saniye kalır
+    }, 2200);
   });
 </script>
 
