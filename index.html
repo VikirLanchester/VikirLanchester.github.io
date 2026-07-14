@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ========================================== -->
+<!-- 📝 DÜZENLENEBİLİR ALAN: Tarayıcı Sekme Başlığı -->
+<!-- ========================================== -->
+<title>Vikir Lanchester — Roblox Builder</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#120a1f;
+    --surface:#1c1130;
+    --surface-2:#241640;
+    --amethyst:#7c3aed;
+    --orchid:#b983ff;
+    --lilac:#e4d9ff;
+    --lavender:#9c8ab8;
+    --line: rgba(185,131,255,0.14);
+    --line-strong: rgba(185,131,255,0.28);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--lilac);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  /* Blueprint grid background */
+  .blueprint{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    opacity:0.6;
+  }
+
+  /* Nav */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(124,58,237,0.08);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:700; font-size:16px; letter-spacing:0.02em;
+    color:#fff;
+  }
+  .brand .mark{
+    width:12px;height:12px;
+    background:linear-gradient(135deg,var(--orchid),var(--amethyst));
+    transform:rotate(45deg);
+    box-shadow:0 0 14px rgba(185,131,255,0.7);
+  }
+  .navlinks{display:flex; gap:36px; align-items:center;}
+  .navlinks a{
+    font-size:13px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--lavender);
+    position:relative;
+    transition:color .2s;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--lilac);}
+  .navlinks a::after{
+    content:'';
+    position:absolute; left:0; bottom:-6px;
+    width:0; height:1px; background:var(--orchid);
+    transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .cta-btn{
+    font-size:13px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+    padding:11px 22px;
+    background:var(--amethyst);
+    color:#fff;
+    border:1px solid var(--amethyst);
+    border-radius:2px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .cta-btn:hover{
+    background:var(--orchid);
+    border-color:var(--orchid);
+    box-shadow:0 0 24px rgba(185,131,255,0.45);
+    transform:translateY(-1px);
+  }
+  .menu-toggle{display:none; background:none; border:none; color:var(--lilac); font-size:22px; cursor:pointer;}
+
+  /* Coordinate tag / eyebrow */
+  .tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--orchid);
+    letter-spacing:0.06em;
+    margin-bottom:18px;
+  }
+  .tag::before{content:'';width:6px;height:6px;background:var(--orchid);border-radius:50%;box-shadow:0 0 8px var(--orchid);}
+
+  section{position:relative; z-index:1;}
+
+  /* Hero */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:76px;
+  }
+  .hero-inner{padding:120px 0 80px;}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:7px 14px;
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    font-size:12px; color:var(--lavender);
+    margin-bottom:28px;
+    background:rgba(124,58,237,0.08);
+  }
+  .status-pill .dot{width:7px;height:7px;background:#22e07a;border-radius:50%;box-shadow:0 0 8px #22e07a;}
+  h1{
+    font-family:'Unbounded',sans-serif;
+    font-weight:900;
+    font-size:clamp(40px, 7vw, 84px);
+    line-height:1.02;
+    color:#fff;
+    letter-spacing:-0.01em;
+    max-width:900px;
+  }
+  h1 .accent{
+    background:linear-gradient(100deg,var(--orchid),var(--amethyst) 70%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    margin-top:28px;
+    max-width:520px;
+    font-size:17px;
+    line-height:1.7;
+    color:var(--lavender);
+  }
+  .hero-actions{display:flex; gap:16px; margin-top:44px; flex-wrap:wrap;}
+  .btn-outline{
+    padding:14px 26px;
+    border:1px solid var(--line-strong);
+    border-radius:2px;
+    font-size:13px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+    color:var(--lilac);
+    transition:border-color .2s, background .2s;
+  }
+  .btn-outline:hover{border-color:var(--orchid); background:rgba(185,131,255,0.06);}
+  .hero-stats{
+    display:flex; gap:56px; margin-top:88px; flex-wrap:wrap;
+  }
+  .stat-num{
+    font-family:'Unbounded',sans-serif; font-weight:700;
+    font-size:32px; color:#fff;
+  }
+  .stat-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px; color:var(--lavender);
+    margin-top:6px; letter-spacing:0.03em;
+  }
+
+  /* Section heading pattern */
+  .section-pad{padding:120px 0;}
+  .section-head{max-width:640px; margin-bottom:64px;}
+  h2{
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    font-size:clamp(28px,4vw,44px);
+    color:#fff;
+    line-height:1.15;
+  }
+  .lead{margin-top:16px; color:var(--lavender); font-size:16px; line-height:1.7;}
+
+  .divider{border:none; border-top:1px solid var(--line); }
+
+  /* About */
+  .about-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start;
+  }
+  .about-grid p{color:var(--lavender); font-size:16px; line-height:1.8; margin-bottom:18px;}
+  .about-grid strong{color:var(--lilac); font-weight:600;}
+  .coord-card{
+    border:1px solid var(--line);
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    padding:32px;
+    position:relative;
+  }
+  .coord-card::before{
+    content:'';
+    position:absolute; top:-1px; left:-1px;
+    width:18px; height:18px;
+    border-top:2px solid var(--orchid);
+    border-left:2px solid var(--orchid);
+  }
+  .coord-card::after{
+    content:'';
+    position:absolute; bottom:-1px; right:-1px;
+    width:18px; height:18px;
+    border-bottom:2px solid var(--orchid);
+    border-right:2px solid var(--orchid);
+  }
+  .coord-row{display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--line);}
+  .coord-row:last-child{border-bottom:none;}
+  .coord-row .k{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--lavender); letter-spacing:0.04em;}
+  .coord-row .v{font-family:'Unbounded',sans-serif; font-size:15px; color:var(--lilac); font-weight:600;}
+
+  /* Services */
+  .services-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .service-card{
+    background:var(--void);
+    padding:36px 28px;
+    transition:background .25s;
+  }
+  .service-card:hover{background:var(--surface);}
+  .service-tag{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--orchid); letter-spacing:0.05em; margin-bottom:22px; display:block;}
+  .service-card h3{
+    font-family:'Unbounded',sans-serif; font-size:17px; color:#fff; font-weight:600; margin-bottom:12px; line-height:1.3;
+  }
+  .service-card p{font-size:14px; color:var(--lavender); line-height:1.7;}
+
+  /* Works */
+  .works-scroll{
+    display:flex; gap:20px; overflow-x:auto; padding-bottom:160px; scroll-snap-type:x mandatory;
+    -ms-overflow-style:none; scrollbar-width:thin; scrollbar-color:var(--amethyst) transparent;
+    align-items: flex-start;
+    margin-bottom: -110px;
+  }
+  .work-card{
+    flex:0 0 340px; scroll-snap-align:start;
+    border:1px solid var(--line);
+    background:var(--surface);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .work-card:hover{
+    border-color: var(--orchid);
+  }
+  .work-thumb{
+    height:200px;
+    background:
+      repeating-linear-gradient(45deg, rgba(185,131,255,0.06) 0 2px, transparent 2px 14px),
+      linear-gradient(135deg,var(--surface-2), var(--void));
+    display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .work-thumb span{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--lavender);
+    z-index: 2;
+  }
+  .work-body{padding:22px 24px;}
+  .work-body .k{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--orchid); letter-spacing:0.05em;}
+  .work-body h3{font-family:'Unbounded',sans-serif; font-size:16px; color:#fff; margin:10px 0 8px; font-weight:600;}
+  .work-body p{font-size:13.5px; color:var(--lavender); line-height:1.6;}
+  .works-hint{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--lavender); margin-top:20px;}
+
+  /* HOVER GALERİ SİSTEMİ CSS */
+  .work-gallery {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, border-color 0.4s ease;
+    padding: 0 24px;
+    border-top: 1px solid transparent;
+  }
+  .work-card:hover .work-gallery {
+    max-height: 180px;
+    opacity: 1;
+    padding: 16px 24px 24px 24px;
+    border-top-color: var(--line);
+  }
+  .gallery-label {
+    display: block;
+    font-size: 10px;
+    color: var(--orchid);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .gallery-item {
+    height: 84px;
+    border: 1px solid var(--line);
+    background: 
+      repeating-linear-gradient(45deg, rgba(185,131,255,0.04) 0 2px, transparent 2px 10px),
+      var(--void);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-item span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--lavender);
+    z-index: 2;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.08);
+  }
+
+  /* Rates */
+  .rate-toggle{display:inline-flex; border:1px solid var(--line-strong); border-radius:2px; overflow:hidden; margin-bottom:48px;}
+  .rate-toggle button{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.04em;
+    padding:10px 22px; background:transparent; color:var(--lavender); border:none; cursor:pointer;
+    transition:background .2s, color .2s;
+  }
+  .rate-toggle button.active{background:var(--amethyst); color:#fff;}
+  .rates-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .rate-card{
+    border:1px solid var(--line);
+    padding:32px;
+    background:var(--surface);
+    display:flex; flex-direction:column;
+  }
+  .rate-card.featured{border-color:var(--orchid); background:linear-gradient(180deg, rgba(124,58,237,0.14), var(--surface));}
+  .rate-name{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--orchid); letter-spacing:0.05em; margin-bottom:18px;}
+  .rate-price{font-family:'Unbounded',sans-serif; font-size:30px; color:#fff; font-weight:700; margin-bottom:6px;}
+  .rate-price small{font-family:'Inter',sans-serif; font-size:13px; color:var(--lavender); font-weight:400;}
+  .rate-desc{font-size:13.5px; color:var(--lavender); line-height:1.7; margin-bottom:24px; flex-grow:1;}
+  .rate-list{list-style:none; font-size:13.5px; color:var(--lilac);}
+  .rate-list li{padding:8px 0; border-top:1px solid var(--line); display:flex; gap:10px;}
+  .rate-list li::before{content:'—'; color:var(--orchid);}
+
+  /* Contact */
+  .contact-box{
+    border:1px solid var(--line-strong);
+    padding:64px;
+    text-align:center;
+    background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.16), transparent 70%);
+  }
+  .contact-box h2{margin-bottom:18px;}
+  .contact-links{display:flex; gap:18px; justify-content:center; margin-top:40px; flex-wrap:wrap;}
+  .contact-links a{
+    padding:14px 28px;
+    border:1px solid var(--line-strong);
+    font-size:13px; letter-spacing:0.03em; text-transform:uppercase; font-weight:600;
+    transition:border-color .2s, background .2s, transform .2s;
+  }
+  .contact-links a:hover{border-color:var(--orchid); background:rgba(185,131,255,0.08); transform:translateY(-2px);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12.5px; color:var(--lavender);
+    flex-wrap:wrap; gap:12px;
+  }
+  footer .mono{color:var(--lavender);}
+
+  /* ========================================== */
+  /* GİRİŞ EKRANI (INTRO SCREEN) TASARIMI       */
+  /* ========================================== */
+  #intro-screen {
+    position: fixed;
+    inset: 0;
+    background-color: #000000;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s ease;
+  }
+
+  .intro-text {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(24px, 6vw, 44px);
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: center;
+    padding: 0 24px;
+    animation: extremePurpleGlow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes extremePurpleGlow {
+    from {
+      text-shadow: 
+        0 0 10px rgba(185, 131, 255, 0.6),
+        0 0 20px rgba(124, 58, 237, 0.4),
+        0 0 30px rgba(124, 58, 237, 0.2);
+      color: #e4d9ff;
+    }
+    to {
+      text-shadow: 
+        0 0 20px rgba(185, 131, 255, 1),
+        0 0 40px rgba(124, 58, 237, 0.9),
+        0 0 60px rgba(124, 58, 237, 0.7),
+        0 0 100px rgba(124, 58, 237, 0.5);
+      color: #ffffff;
+    }
+  }
+
+  #intro-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media (max-width:880px){
+    .navlinks{
+      position:fixed; top:76px; left:0; right:0;
+      flex-direction:column; align-items:flex-start; gap:0;
+      background:var(--void); border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden; transition:max-height .3s ease;
+    }
+    .navlinks.open{max-height:400px;}
+    .navlinks a, .navlinks .cta-btn{width:100%; padding:16px 32px; border-bottom:1px solid var(--line);}
+    .menu-toggle{display:block;}
+    .about-grid{grid-template-columns:1fr; gap:40px;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .rates-grid{grid-template-columns:1fr;}
+    .contact-box{padding:40px 24px;}
+    .hero-stats{gap:36px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- GİRİŞ EKRANI (AÇILIŞ ANIMASYONU) -->
+<div id="intro-screen">
+  <!-- 📝 DÜZENLENEBİLİR ALAN: Girişte parlayacak ismi değiştirebilirsin -->
+  <div class="intro-text">VIKIR LANCHESTER</div>
+</div>
+
+<div class="blueprint"></div>
+
+<!-- HEADER / NAV -->
+<header>
+  <nav class="wrap">
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Sol Üst Logo / İsim -->
+    <div class="brand"><span class="mark"></span> VIKIR LANCHESTER</div>
+    
+    <div class="navlinks" id="navlinks">
+      <a href="#about" onclick="closeMenu()">About</a>
+      <a href="#services" onclick="closeMenu()">Services</a>
+      <a href="#works" onclick="closeMenu()">Projects</a>
+      <a href="#rates" onclick="closeMenu()">Rates</a>
+      <a href="#contact" class="cta-btn" onclick="closeMenu()">Get in Touch</a>
+    </div>
+    
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+  </nav>
+</header>
+
+<!-- GİRİŞ (HERO SECTION) -->
+<section class="hero" id="home">
+  <div class="wrap hero-inner">
+    
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Çalışma Durumu Balonu -->
+    <div class="status-pill"><span class="dot"></span> <span>Available for Commissions</span></div>
+    
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Ana Karşılama Başlığı (İngilizce) -->
+    <h1>Building worlds,<br><span class="accent">block by block.</span></h1>
+    
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Giriş Alt Açıklaması -->
+    <p class="hero-sub">I am Vikir Lanchester — a Roblox builder specializing in map creation, architecture, and environmental design. I manage the entire creative process from concept to optimized final build.</p>
+    
+    <div class="hero-actions">
+      <a href="#works" class="cta-btn">View Projects</a>
+      <a href="#contact" class="btn-outline">Get a Quote</a>
+    </div>
+    
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Sayaç ve İstatistikler -->
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">50+</div>
+        <div class="stat-label mono">COMPLETED BUILDS</div>
+      </div>
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label mono">YEARS OF EXPERIENCE</div>
+      </div>
+      <div>
+        <div class="stat-num">R$ / USD</div>
+        <div class="stat-label mono">PAYMENTS ACCEPTED</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HAKKIMDA (ABOUT ME) -->
+<section class="section-pad" id="about">
+  <div class="wrap">
+    <span class="tag mono">X:001 — ABOUT ME</span>
+    <div class="about-grid">
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Hakkımda Detaylı Yazı Alanı -->
+      <div>
+        <h2 style="margin-bottom:24px;">Storytelling through environment.</h2>
+        <p>I am <strong>Vikir Lanchester</strong>, a builder designing immersive environments and structures for the Roblox universe. Every project should carry its own story — that's why I seek to understand the game's atmosphere, gameplay flow, and player experience before starting to design.</p>
+        <p>I focus deeply on <strong>scale</strong>, <strong>optimization</strong>, and <strong>atmosphere</strong> — producing builds that are as high-performing as they are eye-catching is my priority.</p>
+        <p>Currently open to new projects and collaborations — let's talk if you have an idea.</p>
+      </div>
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Sağ Taraf Bilgi Kartı -->
+      <div class="coord-card">
+        <div class="coord-row"><span class="k mono">ROLE</span><span class="v">Builder</span></div>
+        <div class="coord-row"><span class="k mono">PRIMARY TOOL</span><span class="v">Roblox Studio</span></div>
+        <div class="coord-row"><span class="k mono">PAYMENTS</span><span class="v">Robux · USD</span></div>
+        <div class="coord-row"><span class="k mono">COMMISSIONS</span><span class="v">Open</span></div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- HİZMETLER (SERVICES) -->
+<section class="section-pad" id="services">
+  <div class="wrap">
+    <span class="tag mono">X:002 — SERVICES</span>
+    <div class="section-head">
+      <h2>What I build.</h2>
+      <p class="lead">From concept to optimized final structures, tailoring builds to your game's unique needs.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="services-grid">
+      
+      <!-- Hizmet 1 -->
+      <div class="service-card">
+        <span class="service-tag mono">TERRAIN</span>
+        <h3>Terrain &amp; Environment</h3>
+        <p>Natural or stylized terrain, seamless biome transitions, and detailed environmental atmosphere.</p>
+      </div>
+      
+      <!-- Hizmet 2 -->
+      <div class="service-card">
+        <span class="service-tag mono">ARCHITECTURE</span>
+        <h3>Architecture &amp; Interior</h3>
+        <p>Custom buildings, interior assets, and level designs structured to support gameplay flow.</p>
+      </div>
+      
+      <!-- Hizmet 3 -->
+      <div class="service-card">
+        <span class="service-tag mono">OPTIMIZATION</span>
+        <h3>Performance Tuning</h3>
+        <p>Optimized part counts, smart LOD setups, and streaming-enabled mobile-friendly builds.</p>
+      </div>
+      
+      <!-- Hizmet 4 -->
+      <div class="service-card">
+        <span class="service-tag mono">REVISION</span>
+        <h3>Revision Support</h3>
+        <p>Post-delivery adjustments and fine-tuning to ensure seamless integration into your studio.</p>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJELER (WORKS) -->
+<section class="section-pad" id="works">
+  <div class="wrap">
+    <span class="tag mono">X:003 — PROJECTS</span>
+    <div class="section-head">
+      <h2>Recent builds.</h2>
+      <p class="lead">Hover over the cards to see more perspectives.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="works-scroll" id="worksScroll">
+      
+      <!-- =================================================== -->
+      <!-- 📝 PROJE 1: Güvenli Hisler (DÜZENLENEBİLİR ALAN)    -->
+      <!-- =================================================== -->
+      <div class="work-card">
+        <div class="work-thumb">
+          <!-- 🖼️ Ana Görsel (Eğer görsel linkin varsa src="..." kısmına yaz) -->
+          <img src="Build1.webp" alt="Safe Feelings" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;">
+          <!-- 💡 Görsel yüklenmezse arkada gözükecek yedek metin -->
+          <span class="mono">Build1.webp</span>
+        </div>
+        <div class="work-body">
+          <span class="k mono">SIM STYLE MAP</span>
+          <h3>Safe Feelings</h3>
+          <p>A cozy and serene space designed to evoke a sense of peace and comfort.</p>
+        </div>
+        
+        <!-- Üzerine gelince açılan ek görseller -->
+        <div class="work-gallery">
+          <span class="gallery-label mono">ADDITIONAL VIEWS</span>
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 1 -->
+              <img src="Build2.webp" alt="Perspective 1">
+              <span>Build2.webp</span>
+            </div>
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 2 -->
+              <img src="Build3.webp" alt="Perspective 2">
+              <span>Build3.webp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 📝 PROJE 2: Kayıp Kütüphane (DÜZENLENEBİLİR ALAN)  -->
+      <!-- =================================================== -->
+      <div class="work-card">
+        <div class="work-thumb">
+          <!-- 🖼️ Ana Görsel (Görsel linkini buraya koyabilirsin) -->
+          <!-- <img src="resim_linki.jpg" alt="The Lost Library" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <span class="mono">BUILD_02.rbxl</span>
+        </div>
+        <div class="work-body">
+          <span class="k mono">RPG INTERIOR</span>
+          <h3>The Lost Library</h3>
+          <p>Multi-story interior and atmospheric lighting design for a fantasy RPG.</p>
+        </div>
+        
+        <div class="work-gallery">
+          <span class="gallery-label mono">ADDITIONAL VIEWS</span>
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 1 -->
+              <!-- <img src="ek_resim_1.jpg" alt="Library Angle 1"> -->
+              <span>IMG_02.rbxl</span>
+            </div>
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 2 -->
+              <!-- <img src="ek_resim_2.jpg" alt="Library Angle 2"> -->
+              <span>IMG_03.rbxl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 📝 PROJE 3: Neon Şehir Merkezi (DÜZENLENEBİLİR ALAN)-->
+      <!-- =================================================== -->
+      <div class="work-card">
+        <div class="work-thumb">
+          <!-- 🖼️ Ana Görsel -->
+          <!-- <img src="resim_linki.jpg" alt="Neon Downtown" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <span class="mono">BUILD_03.rbxl</span>
+        </div>
+        <div class="work-body">
+          <span class="k mono">TYCOON HUB</span>
+          <h3>Neon Downtown</h3>
+          <p>Optimized downtown district and spawn environment for a tycoon game.</p>
+        </div>
+        
+        <div class="work-gallery">
+          <span class="gallery-label mono">ADDITIONAL VIEWS</span>
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 1 -->
+              <!-- <img src="ek_resim_1.jpg" alt="City Angle 1"> -->
+              <span>IMG_02.rbxl</span>
+            </div>
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 2 -->
+              <!-- <img src="ek_resim_2.jpg" alt="City Angle 2"> -->
+              <span>IMG_03.rbxl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- 📝 PROJE 4: Sessiz Koridor (DÜZENLENEBİLİR ALAN)   -->
+      <!-- =================================================== -->
+      <div class="work-card">
+        <div class="work-thumb">
+          <!-- 🖼️ Ana Görsel -->
+          <!-- <img src="resim_linki.jpg" alt="Silent Corridor" style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0;"> -->
+          <span class="mono">BUILD_04.rbxl</span>
+        </div>
+        <div class="work-body">
+          <span class="k mono">HORROR MAP</span>
+          <h3>Silent Corridor</h3>
+          <p>Tight, high-tension corridor and lighting setup for a horror game.</p>
+        </div>
+        
+        <div class="work-gallery">
+          <span class="gallery-label mono">ADDITIONAL VIEWS</span>
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 1 -->
+              <!-- <img src="ek_resim_1.jpg" alt="Corridor Angle 1"> -->
+              <span>IMG_02.rbxl</span>
+            </div>
+            <div class="gallery-item">
+              <!-- 🖼️ Ek Görsel 2 -->
+              <!-- <img src="ek_resim_2.jpg" alt="Corridor Angle 2"> -->
+              <span>IMG_03.rbxl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="works-hint">← scroll to view more projects →</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FİYATLANDIRMA (RATES) -->
+<section class="section-pad" id="rates">
+  <div class="wrap">
+    <span class="tag mono">X:004 — RATES</span>
+    <div class="section-head">
+      <h2>Rates &amp; Packages.</h2>
+      <p class="lead">I accept payments in Robux or USD depending on the project's scope. Milestone-based contracts are prioritized.</p>
+    </div>
+    <div class="rates-grid">
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 1 (Parça başı) -->
+      <div class="rate-card">
+        <span class="rate-name mono">PER ASSET</span>
+        <div class="rate-price">800 R$ <small>/ $3 USD</small></div>
+        <p class="rate-desc">Single assets, custom props, or small-scale building models.</p>
+        <ul class="rate-list">
+          <li>Studio file delivery</li>
+          <li>1 revision included</li>
+        </ul>
+      </div>
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 2 (Görev Başı) -->
+      <div class="rate-card featured">
+        <span class="rate-name mono">PER TASK</span>
+        <div class="rate-price">4,000 R$ <small>/ $15 USD</small></div>
+        <p class="rate-desc">A single complete map section or a customized interior build set.</p>
+        <ul class="rate-list">
+          <li>Studio setup &amp; import assistance</li>
+          <li>Full optimization check</li>
+          <li>2 revisions included</li>
+        </ul>
+      </div>
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Paket 3 (Tam Harita) -->
+      <div class="rate-card">
+        <span class="rate-name mono">FULL MAP</span>
+        <div class="rate-price">Custom Quote</div>
+        <p class="rate-desc">End-to-end map design, custom layout structure, and asset integration.</p>
+        <ul class="rate-list">
+          <li>Conceptual layout &amp; planning</li>
+          <li>Milestone-by-milestone delivery</li>
+          <li>Unlimited revisions (within scope)</li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- İLETİŞİM (CONTACT) -->
+<section class="section-pad" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <span class="tag mono" style="justify-content:center;">X:005 — CONTACT</span>
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: İletişim Başlıkları -->
+      <h2>Let's build together.</h2>
+      <p class="lead" style="margin:0 auto; max-width:480px;">Have a grand vision in mind? Message me to discuss the details.</p>
+      
+      <!-- 📝 DÜZENLENEBİLİR ALAN: Twitter ve Discord Linkleri -->
+      <div class="contact-links">
+        <a href="https://twitter.com/KULLANICI_ADIN" target="_blank">Twitter / X</a>
+        <a href="https://discord.com/invite/DAVET_KODUN" target="_blank">Discord</a>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="width:100%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <!-- 📝 DÜZENLENEBİLİR ALAN: Footer Telif Hakkı Yazısı -->
+    <span>© 2026 Vikir Lanchester</span>
+    <span class="mono">ROBLOX BUILDER · STUDIO READY</span>
+  </div>
+</footer>
+
+<script type="text/javascript">
+  // Mobil Hamburger Menü Tetikleyicisi
+  const toggle = document.getElementById('menuToggle');
+  const navlinks = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => navlinks.classList.toggle('open'));
+  function closeMenu(){ navlinks.classList.remove('open'); }
+
+  // Giriş Ekranını Kapatma Sistemi (Fade-out)
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const intro = document.getElementById('intro-screen');
+      if (intro) {
+        intro.classList.add('fade-out');
+      }
+    }, 2200); // Intro ekranda 2.2 saniye kalır
+  });
+</script>
+
+</body>
+</html>
